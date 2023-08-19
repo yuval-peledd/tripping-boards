@@ -58,6 +58,8 @@ async def main(win, mode, timer, load, movestr=""):
 
                     side, board, flags = makeMove(
                         side, board, prevsel, sel, flags, promote)
+                    if isChecked(side, board):
+                        sound.play_check(load)
                     moves.append(encode(prevsel, sel, promote))
 
 
@@ -91,6 +93,8 @@ async def main(win, mode, timer, load, movestr=""):
 
                         side, board, flags = makeMove(
                             side, board, prevsel, sel, flags, promote)
+                        if isChecked(side, board):
+                            sound.play_check(load)
                         moves.append(encode(prevsel, sel, promote))
 
                 # Remove comment to return undo and save buttons

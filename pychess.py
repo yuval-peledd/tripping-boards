@@ -132,7 +132,7 @@ async def main():
         clock.tick(30)
         global prefs
         showMain(prefs)
-
+        sound.play_click(prefs)
         # We need to get the position of the mouse so that we can blit an image
         # on the text over which the mouse hovers
         x, y = pygame.mouse.get_pos()

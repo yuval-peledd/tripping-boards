@@ -78,11 +78,11 @@ def putClock(win, timer):
 def drawBoard(win):
     #TODO replace background color from here
     win.fill((200, 200, 200))
-    pygame.draw.rect(win, (180, 100, 30), (50, 50, 400, 400))
+    pygame.draw.rect(win, (238, 8, 140), (50, 50, 400, 400))
     for y in range(1, 9):
         for x in range(1, 9):
             if (x + y) % 2 == 0:
-                pygame.draw.rect(win, (220, 240, 240), (50 * x, 50 * y, 50, 50))
+                pygame.draw.rect(win, (249, 236, 0), (50 * x, 50 * y, 50, 50))
                 
 # This funtion draws all pieces onto the board
 def drawPieces(win, board, flip):

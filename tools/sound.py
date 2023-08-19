@@ -21,6 +21,7 @@ if SUCCESS:
     move = pygame.mixer.Sound(os.path.join("res", "sounds", "move.ogg"))
     start = pygame.mixer.Sound(os.path.join("res", "sounds", "start.ogg"))
     drag = pygame.mixer.Sound(os.path.join("res", "sounds", "drag.ogg"))
+    check = pygame.mixer.Sound(os.path.join("res", "sounds", "check.ogg"))
 
     background = pygame.mixer.Sound(os.path.join("res", "sounds", "background.ogg"))
 
@@ -30,7 +31,7 @@ class Music:
         
     def play(self, load):
         if SUCCESS and load["sounds"]:
-            background.play(-1)
+           # background.play(-1)
             self.playing = True
     
     def stop(self):
@@ -58,6 +59,10 @@ def play_move(load):
 def play_drag(load):
     if SUCCESS and load["sounds"]:
         drag.play()
+
+def play_check(load):
+    if SUCCESS and load["sounds"]:
+        check.play()
 
 if SUCCESS:
     pygame.mixer.quit()
