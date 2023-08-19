@@ -47,6 +47,8 @@ from chess.lib.utils import (
     saveGame,
 )
 from chess.lib.ai import miniMax
+import time
+import asyncio
 
 # This function converts a string of moves(move sequence) of standard notation
 # into the notation used by the game.
@@ -132,6 +134,8 @@ def animate(win, side, board, fro, to, load, player=None):
         pygame.display.update()
     sound.play_move(load)
 
+
+
 # This is a compilation of all gui functions. This handles the display of the
 # screen when chess gameplay takes place. This tool needs to be called
 # everytime in the game loop.
@@ -162,6 +166,9 @@ def showScreen(win, side, board, flags, pos, load, player=None, online=False):
             win.blit(CHESS.PIECES[side]["k"], (270, 0))
         else:
             win.blit(CHESS.STALEMATE, (160, 12))
+
+        # await asyncio.sleep(5)  # Wait for 5 seconds
+        return True
     else:
         if online:
             win.blit(CHESS.DRAW, (10, 12))

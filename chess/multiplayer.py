@@ -17,8 +17,7 @@ def ceildiv(a, b):
 # run main code for chess
 async def main(win, mode, timer, load, movestr=""):
     start(win, load)
-    controller = ExternalInputController()
-    await controller.start_server()
+
     moves = movestr.split()
 
     side, board, flags = convertMoves(moves)
@@ -30,7 +29,7 @@ async def main(win, mode, timer, load, movestr=""):
     while True:
         looptime = getTime()
         clock.tick(25)
-        
+
         timedelta = 0
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -86,7 +85,7 @@ async def main(win, mode, timer, load, movestr=""):
                         starttime = getTime()
                         promote = getPromote(win, side, board, prevsel, sel)
                         animate(win, side, board, prevsel, sel, load)
-                        
+
                         timedelta += getTime() - starttime
                         timer = updateTimer(side, mode, timer)
 
@@ -107,6 +106,9 @@ async def main(win, mode, timer, load, movestr=""):
                 #         moves = undo(moves)
                 #         side, board, flags = convertMoves(moves)
 
-        showScreen(win, side, board, flags, sel, load)
+        gameDone = showScreen(win, side, board, flags, sel, load)
         timer = showClock(win, side, mode, timer, looptime, timedelta)
         await asyncio.sleep(1)
+
+        if gameDone:
+            return True
