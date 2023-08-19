@@ -147,8 +147,8 @@ def showScreen(win, side, board, flags, pos, load, player=None, online=False):
     # win.blit(TURN, (460, 0))
     # win.blit(BACK, (460, 0))
 
-    # if not multi:
-    win.blit(CHESS.TURN[int(player)], (10, 460))
+    if not isEnd(side, board, flags):
+        win.blit(CHESS.TURN[int(player)], (10, 460))
 
     # if not online:
     #     if load["allow_undo"]:
