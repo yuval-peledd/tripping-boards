@@ -1,16 +1,24 @@
-
 '''
 This file is a part of My-PyChess application.
 In this file, we manage the chess gameplay for multiplayer section of this
 application.
 '''
+import asyncio
 import time
+
+from chess.externalinputcontroller import ExternalInputController
 from chess.lib import *
 
-# run main code for chess
-def main(win, mode, timer, load, movestr=""):
-    start(win, load)
+# Define event handler for external input controller
 
+def ceildiv(a, b):
+    return -(a // -b)
+
+# run main code for chess
+async def main(win, mode, timer, load, movestr=""):
+    start(win, load)
+    controller = ExternalInputController()
+    await controller.start_server()
     moves = movestr.split()
 
     side, board, flags = convertMoves(moves)
@@ -22,7 +30,7 @@ def main(win, mode, timer, load, movestr=""):
     while True:
         looptime = getTime()
         clock.tick(25)
-
+        
         timedelta = 0
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -30,6 +38,29 @@ def main(win, mode, timer, load, movestr=""):
                 if prompt(win):
                     return 0
                 timedelta += getTime() - starttime
+            elif event.type == ExternalInputController.CUSTOM_EVENT_ID:
+                print("Custom event ID received. Command is " + event.command)
+                normalized_command = int(event.command) + 1
+                x = normalized_command % 8
+                y = ceildiv(normalized_command, 8)
+                if isOccupied(side, board, [x, y]):
+                    sound.play_click(load)
+
+                prevsel = sel
+                sel = [x, y]
+
+                if isValidMove(side, board, flags, prevsel, sel):
+                    starttime = getTime()
+                    promote = getPromote(win, side, board, prevsel, sel)
+                    animate(win, side, board, prevsel, sel, load)
+
+                    timedelta += getTime() - starttime
+                    timer = updateTimer(side, mode, timer)
+
+                    side, board, flags = makeMove(
+                        side, board, prevsel, sel, flags, promote)
+                    moves.append(encode(prevsel, sel, promote))
+
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = event.pos
@@ -55,7 +86,7 @@ def main(win, mode, timer, load, movestr=""):
                         starttime = getTime()
                         promote = getPromote(win, side, board, prevsel, sel)
                         animate(win, side, board, prevsel, sel, load)
-
+                        
                         timedelta += getTime() - starttime
                         timer = updateTimer(side, mode, timer)
 
@@ -78,3 +109,4 @@ def main(win, mode, timer, load, movestr=""):
 
         showScreen(win, side, board, flags, sel, load)
         timer = showClock(win, side, mode, timer, looptime, timedelta)
+        await asyncio.sleep(1)
