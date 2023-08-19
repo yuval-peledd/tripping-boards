@@ -1,3 +1,4 @@
+
 """
 This file is a part of My-PyChess application.
 
@@ -15,11 +16,11 @@ For a better understanding of the variables used here, checkout docs.txt
 from chess.lib.core import (
     getType,
     isOccupied,
-    isChecked,  
+    isChecked,
     isEnd,
     isValidMove,
     availableMoves,
-    makeMove, 
+    makeMove,
 )
 from chess.lib.gui import (
     pygame,
@@ -32,7 +33,7 @@ from chess.lib.gui import (
     drawBoard,
     drawPieces,
     prompt,
-    start, 
+    start,
 )
 from chess.lib.utils import (
     encode,
@@ -73,20 +74,20 @@ def showClock(win, side, mode, timer, start, timedelta):
     if timer is None:
         pygame.display.update()
         return None
-    
+
     ret = list(timer)
     elaptime = getTime() - (start + timedelta)
     if mode == -1:
         ret[side] += elaptime
         if ret[side] >= 3600000:
             ret[side] = 3599000
-            
+
     else:
         ret[side] -= elaptime
         if ret[side] < 0:
             showTimeOver(win, side)
             return None
-    
+
     putClock(win, ret)
     return ret
 
@@ -107,7 +108,7 @@ def animate(win, side, board, fro, to, load, player=None):
         FLIP = side and load["flip"]
     else:
         FLIP = player and load["flip"]
-        
+
     piece = CHESS.PIECES[side][getType(side, board, fro)]
     x1, y1 = fro[0] * 50, fro[1] * 50
     x2, y2 = to[0] * 50, to[1] * 50
@@ -117,9 +118,9 @@ def animate(win, side, board, fro, to, load, player=None):
 
     stepx = (x2 - x1) / 50
     stepy = (y2 - y1) / 50
-    
+
     col = (180, 100, 30) if (fro[0] + fro[1]) % 2 else (220, 240, 240)
-    
+
     clk = pygame.time.Clock()
     for i in range(51):
         clk.tick_busy_loop(100)
@@ -143,15 +144,16 @@ def showScreen(win, side, board, flags, pos, load, player=None, online=False):
     flip = load["flip"] and player
 
     drawBoard(win)
-    win.blit(BACK, (460, 0))
-    
-    if not multi:
-        win.blit(CHESS.TURN[int(side == player)], (10, 460))
-        
-    if not online:
-        if load["allow_undo"]:
-            win.blit(CHESS.UNDO, (10, 12))
-        win.blit(CHESS.SAVE, (350, 462))
+    # win.blit(TURN, (460, 0))
+    # win.blit(BACK, (460, 0))
+
+    # if not multi:
+    win.blit(CHESS.TURN[int(player)], (10, 460))
+
+    # if not online:
+    #     if load["allow_undo"]:
+    #         win.blit(CHESS.UNDO, (10, 12))
+    #     win.blit(CHESS.SAVE, (350, 462))
 
     if isEnd(side, board, flags):
         if isChecked(side, board):

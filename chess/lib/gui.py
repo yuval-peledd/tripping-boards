@@ -1,3 +1,4 @@
+
 """
 This file is a part of My-PyChess application.
 In this file, we define some basic gui-related functions
@@ -39,14 +40,14 @@ def getChoice(win, side):
 def showTimeOver(win, side):
     pygame.draw.rect(win, (0, 0, 0), (100, 190, 300, 120))
     pygame.draw.rect(win, (255, 255, 255), (100, 190, 300, 120), 4)
-    
+
     win.blit(CHESS.TIMEUP[0], (220, 200))
     win.blit(CHESS.TIMEUP[1], (105, 220))
     win.blit(CHESS.TIMEUP[2], (115, 240))
-    
+
     win.blit(CHESS.OK, (230, 270))
     pygame.draw.rect(win, (255, 255, 255), (225, 270, 50, 30), 2)
-    
+
     pygame.display.update()
     while True:
         for event in pygame.event.get():
@@ -57,25 +58,26 @@ def showTimeOver(win, side):
 def putClock(win, timer):
     if timer is None:
         return
-    
+
     m1, s1 = divmod(timer[0] // 1000, 60)
     m2, s2 = divmod(timer[1] // 1000, 60)
-    
+
     putLargeNum(win, format(m1, "02"), (100, 460), False)
     win.blit(CHESS.COL, (130, 460))
     putLargeNum(win, format(s1, "02"), (140, 460), False)
     putLargeNum(win, format(m2, "02"), (210, 460), False)
     win.blit(CHESS.COL, (240, 460))
     putLargeNum(win, format(s2, "02"), (250, 460), False)
-    
+
     win.blit(CHESS.PIECES[0]["k"], (50, 450))
     win.blit(CHESS.PIECES[1]["k"], (278, 450))
-    
+
     pygame.display.update()
 
 # This function draws the board
 def drawBoard(win):
-    win.fill((100, 200, 200))
+    #TODO replace background color from here
+    win.fill((200, 200, 200))
     pygame.draw.rect(win, (180, 100, 30), (50, 50, 400, 400))
     for y in range(1, 9):
         for x in range(1, 9):
