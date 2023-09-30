@@ -100,7 +100,7 @@ def showAvailMoves(win, side, board, pos, flags, flip):
     for i in availableMoves(side, board, piece, flags):
         x = 470 - i[0] * 50 if flip else i[0] * 50 + 20
         y = 470 - i[1] * 50 if flip else i[1] * 50 + 20
-        pygame.draw.rect(win, (0, 255, 0), (x, y, 10, 10))
+        pygame.draw.rect(win, (255, 102, 204) if not side else (121, 209, 148), (x, y, 10, 10))
 
 # This function makes a gentle animation of a piece that is getting moved.
 # This function needs to be called BEFORE the actual move takes place
@@ -121,8 +121,7 @@ def animate(win, side, board, fro, to, load, player=None):
     stepx = (x2 - x1) / 50
     stepy = (y2 - y1) / 50
 
-    col = (180, 100, 30) if (fro[0] + fro[1]) % 2 else (220, 240, 240)
-
+    col = (121, 209, 148) if side else (255, 102, 204)
     clk = pygame.time.Clock()
     for i in range(51):
         clk.tick_busy_loop(100)
@@ -178,9 +177,10 @@ def showScreen(win, side, board, flags, pos, load, player=None, online=False):
             win.blit(CHESS.CHECK, (200, 12))
 
         if isOccupied(side, board, pos) and side == player:
+            col = (245, 210, 247) if not side else (180, 240, 180)
             x = (9 - pos[0]) * 50 if flip else pos[0] * 50
             y = (9 - pos[1]) * 50 if flip else pos[1] * 50
-            pygame.draw.rect(win, (255, 255, 0), (x, y, 50, 50))
+            pygame.draw.rect(win, col, (x, y, 50, 50))
 
     drawPieces(win, board, flip)
     if load["show_moves"] and side == player:

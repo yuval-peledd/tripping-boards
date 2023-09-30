@@ -96,7 +96,8 @@ class CHESS:
     CHOOSE = small.render("CHOOSE:", True, BLACK)
     SAVE = small.render("Save Game", True, BLACK)
     UNDO = small.render("Undo", True, BLACK)
-
+    BG = pygame.image.load(os.path.join("res", "img", "bg.png"))
+    BG = pygame.transform.scale(BG, (500, 500))
     MESSAGE = (
         small.render("Do you want to quit", True, WHITE),
         small.render("this game?", True, WHITE),

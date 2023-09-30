@@ -6,6 +6,8 @@ In this file, we define some basic gui-related functions
 For a better understanding of the variables used here, checkout docs.txt
 """
 import pygame
+from pygame import Color
+
 from tools.loader import CHESS, BACK, putNum, putLargeNum
 from tools import sound
 
@@ -77,12 +79,13 @@ def putClock(win, timer):
 # This function draws the board
 def drawBoard(win):
     #TODO replace background color from here
-    win.fill((200, 200, 200))
-    pygame.draw.rect(win, (238, 8, 140), (50, 50, 400, 400))
-    for y in range(1, 9):
-        for x in range(1, 9):
-            if (x + y) % 2 == 0:
-                pygame.draw.rect(win, (249, 236, 0), (50 * x, 50 * y, 50, 50))
+    win.blit(CHESS.BG, (0, 0))
+    #win.fill((200, 200, 200))
+    #pygame.draw.rect(win, (238, 8, 140, 10), (50, 50, 400, 400))
+    #for y in range(1, 9):
+    #    for x in range(1, 9):
+    #        if (x + y) % 2 == 0:
+    #x  §               pygame.draw.rect(win, (249, 236, 0, 10), (50 * x, 50 * y, 50, 50))
                 
 # This funtion draws all pieces onto the board
 def drawPieces(win, board, flip):
