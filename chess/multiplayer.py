@@ -38,7 +38,7 @@ async def main(win, mode, timer, load, movestr=""):
                     return 0
                 timedelta += getTime() - starttime
             elif event.type == ExternalInputController.CUSTOM_EVENT_ID:
-                print("Custom event ID received. Command is " + event.command)
+                print("Custom event ID received. Command is " + str(event.command))
                 normalized_command = int(event.command) + 1
                 x = normalized_command % 8
                 y = ceildiv(normalized_command, 8)

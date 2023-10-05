@@ -17,8 +17,13 @@ class ExternalInputController(object):
 
         print("ExternalInputController::handle - Request served")
         # Command should be a number between 0 and 63 describing the location of the click inside the matrix
-        if command and str.isnumeric(command):
-            custom_event = pygame.event.Event(ExternalInputController.CUSTOM_EVENT_ID, command=command)
+        if command and len(command) == 2:
+
+            command_letter_value = ord(command[0]) - ord('A')
+            command_num_value = int(command[1])
+            custom_event_command_numeric = (8 - command_num_value) * 8 + command_letter_value
+            custom_event = pygame.event.Event(ExternalInputController.CUSTOM_EVENT_ID,
+                                              command=custom_event_command_numeric)
             # Post the custom event to the event queue
             pygame.event.post(custom_event)
         else:
