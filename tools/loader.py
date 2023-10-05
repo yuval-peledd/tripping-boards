@@ -114,8 +114,8 @@ class CHESS:
     SAVE_ERR = vsmall.render("ERROR: SaveGame Limit Exeeded", True, WHITE)
 
     TURN = (
-        small.render("White turn", True, BLACK),
-        small.render("Black turn", True, BLACK),
+        small.render("Cabernet turn", True, (255, 102, 204)),
+        small.render("Chardonnay turn", True, (121, 209, 148)   ),
     )
 
     DRAW = small.render("Draw", True, BLACK)
